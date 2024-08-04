@@ -15,9 +15,23 @@ import SwiftUI
 struct ListView: View {
     @Environment(Store.self) private var store
     var body: some View {
-        NavigationStack{
-            Text("List View")
-                .navigationTitle("List View")
+        NavigationStack {
+            List(store.sampleImages) { sampleImage in
+                HStack {
+                    AsyncImage(url: sampleImage.imageUrl) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50)
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    Text(sampleImage.caption)
+                        .font(.title)
+                }
+            }
+            .listStyle(.plain)
+            .navigationTitle("List View")
         }
     }
 }
